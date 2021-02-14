@@ -908,22 +908,35 @@ function onSection() {
   }
 
   else if (currentSection.type == TYPE_JET) {
+    var jetModeStr;
+    var warn = false;
+
     // Cutter mode used for different cutting power in PWM laser
     switch (currentSection.jetMode) {
       case JET_MODE_THROUGH:
         cutterOnCurrentPower = properties.cutter2_OnThrough;
+        jetModeStr = "Through"
         break;
       case JET_MODE_ETCHING:
         cutterOnCurrentPower = properties.cutter3_OnEtch;
+        jetModeStr = "Etching"
         break;
       case JET_MODE_VAPORIZE:
+        jetModeStr = "Vaporize"
         cutterOnCurrentPower = properties.cutter1_OnVaporize;
         break;
       default:
-        error("Cutting mode is not supported.");
+        jetModeStr = "*** Unknown ***"
+        warn = true;
     }
 
-    writeComment(eComment.Info, " " + sectionComment + " Laser/Plasma Cutting mode: " + getParameter("operation:cuttingMode"));
+    if (warn) {
+      writeComment(eComment.Info, " " + sectionComment + ", Laser/Plasma Cutting mode: " + getParameter("operation:cuttingMode") + ", jetMode: " + jetModeStr);
+      writeComment(eComment.Important, "Selected cutting mode " + currentSection.jetMode + " not mapped to power level");
+    }
+    else {
+      writeComment(eComment.Info, " " + sectionComment + ", Laser/Plasma Cutting mode: " + getParameter("operation:cuttingMode") + ", jetMode: " + jetModeStr + ", power: " + cutterOnCurrentPower);
+    }
   }
 
   // Adjust the mode
@@ -1175,26 +1188,26 @@ function onSpindleSpeed(spindleSpeed) {
 }
 
 function onCommand(command) {
-  writeComment(eComment.Info, "  " + getCommandStringId(command));
+  writeComment(eComment.Info, " " + getCommandStringId(command));
   
   switch (command) {
     case COMMAND_START_SPINDLE:
       onCommand(tool.clockwise ? COMMAND_SPINDLE_CLOCKWISE : COMMAND_SPINDLE_COUNTERCLOCKWISE);
       return;
     case COMMAND_SPINDLE_CLOCKWISE:
-      if (tool.isJetTool())
-        return;
-      setSpindeSpeed(spindleSpeed, true);
+      if (!tool.isJetTool()) {
+        setSpindeSpeed(spindleSpeed, true);
+      }
       return;
     case COMMAND_SPINDLE_COUNTERCLOCKWISE:
-      if (tool.isJetTool())
-        return;
-      setSpindeSpeed(spindleSpeed, false);
+      if (!tool.isJetTool()) {
+        setSpindeSpeed(spindleSpeed, false);
+      }
       return;
     case COMMAND_STOP_SPINDLE:
-      if (tool.isJetTool())
-        return;
-      setSpindeSpeed(0, true);
+      if (!tool.isJetTool()) {
+        setSpindeSpeed(0, true);
+      }
       return;
     case COMMAND_COOLANT_ON:
       if (tool.isJetTool()) {
@@ -1220,9 +1233,9 @@ function onCommand(command) {
     case COMMAND_BREAK_CONTROL:
       return;
     case COMMAND_TOOL_MEASURE:
-      if (tool.isJetTool())
-        return;
-      probeTool();
+      if (!tool.isJetTool()) {
+        probeTool();
+      }
       return;
     case COMMAND_STOP:
       writeBlock(mFormat.format(0));
