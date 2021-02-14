@@ -152,7 +152,7 @@ Laser: On - Etch|Persent of power to turn on the laser/plasma cutter in etch mod
 Laser: Marlin/Reprap Mode|Marlin/Reprap mode of the laser/plasma cutter|**Fan - M106 S{PWM}/M107**|"Fan - M106 S{PWM}/M107", "Spindle - M3 O{PWM}/M5", "Pin - M42 P{pin} S{PWM}"|
 Laser: Marlin M42 Pin|Marlin custom pin number for the laser/plasma cutter|**4**||
 Laser: GRBL Mode|GRBL mode of the laser/plasma cutter|**M4 S{PWM}/M5 dynamic power**|"M4 S{PWM}/M5 dynamic power", "M3 S{PWM}/M5 static power"|
-Laser: Coolant|Force a coolant to be used|**Off**|"M4 S{PWM}/M5 dynamic power", "off, flood, mist, throughTool, air, airThroughTool, suction, floodMist, floodThroughTool"|
+Laser: Coolant|Force a coolant to be used|**Off**|off, flood, mist, throughTool, air, airThroughTool, suction, floodMist, floodThroughTool|
 
 ## Group 7: Override Behaviour by External File Properties
 
