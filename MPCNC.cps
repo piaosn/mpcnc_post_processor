@@ -112,9 +112,9 @@ properties = {
   gcodeToolFile: "",                   // File with custom Gcode for tool change (in nc folder)
   gcodeProbeFile: "",                  // File with custom Gcode for tool probe (in nc folder)
 
-  cutter1_OnVaporize: 100,             // Persent of power to turn on the laser/plasma cutter in vaporize mode
-  cutter2_OnThrough: 80,               // Persent of power to turn on the laser/plasma cutter in through mode
-  cutter3_OnEtch: 40,                  // Persent of power to turn on the laser/plasma cutter in etch mode
+  cutter1_OnVaporize: 100,             // Percentage of power to turn on the laser/plasma cutter in vaporize mode
+  cutter2_OnThrough: 80,               // Percentage of power to turn on the laser/plasma cutter in through mode
+  cutter3_OnEtch: 40,                  // Percentage of power to turn on the laser/plasma cutter in etch mode
   cutter4_MarlinMode: 106,             // Marlin mode laser/plasma cutter
   cutter5_MarlinPin: 4,                // Marlin laser/plasma cutter pin for M42
   cutter6_GrblMode: 4,                 // GRBL mode laser/plasma cutter
